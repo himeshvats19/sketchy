@@ -3,11 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const canvasRef = useRef(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const [selectedColor, setSelectedColor] = useState("#000");
-  const [canvasContext, setCanvasContext] = useState({});
-
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
   let isDrawing = false;
   let lastX = 0;
   let lastY = 0;
@@ -31,8 +28,9 @@ export default function Home() {
     if (!(canvas instanceof HTMLCanvasElement)) return;
     const ctx = canvas?.getContext("2d");
     if (ctx === null) return;
-    canvas.width = windowWidth - 80;
-    canvas.height = windowHeight - 80;
+
+    canvas.width = window.innerWidth - 80;
+    canvas.height = window.innerHeight - 80;
 
     ctx.lineCap = "round";
     ctx.lineWidth = 10;
@@ -63,8 +61,6 @@ export default function Home() {
         className="border-black border-1px bg-white "
         ref={canvasRef}
         onMouseMoveCapture={() => draw}
-        width={windowWidth}
-        height={windowHeight}
       ></canvas>
     </div>
   );
