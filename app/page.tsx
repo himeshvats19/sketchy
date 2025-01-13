@@ -14,7 +14,7 @@ export default function Home() {
   let hue = 0;
   let direction = true;
 
-  const draw = (e, ctx) => {
+  const draw = (e: any, ctx: any) => {
     if (!isDrawing) return;
     if (ctx === undefined) return;
     ctx.beginPath();
@@ -27,8 +27,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const canvas = document.querySelector("#draw") as HTMLCanvasElement;
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+    const ctx = canvas?.getContext("2d");
+    if (ctx === null) return;
     canvas.width = windowWidth - 80;
     canvas.height = windowHeight - 80;
 
@@ -45,9 +47,11 @@ export default function Home() {
     canvas.addEventListener("mouseout", () => (isDrawing = false));
   }, []);
 
-  const changeColor = (e) => {
-    const canvas = canvasRef.current;
+  const changeColor = (e: any) => {
+    const canvas = document.querySelector("#draw") as HTMLCanvasElement;
+    if (!(canvas instanceof HTMLCanvasElement)) return;
     const ctx = canvas.getContext("2d");
+    if (ctx === null) return;
     ctx.strokeStyle = e.target.value;
   };
   return (
@@ -58,7 +62,7 @@ export default function Home() {
         id="draw"
         className="border-black border-1px bg-white "
         ref={canvasRef}
-        onMouseMoveCapture={draw}
+        onMouseMoveCapture={() => draw}
         width={windowWidth}
         height={windowHeight}
       ></canvas>
